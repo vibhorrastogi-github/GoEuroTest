@@ -49,6 +49,11 @@ public class LocationManager {
 
             final List<Location> locations = locationService.get(cityName);
 
+            if (locations == null || locations.isEmpty()) {
+
+                throw new IllegalStateException("locations not found by cityName: " + cityName);
+            }
+
             fileCreator.create(locations, cityName);
 
             LOGGER.info("location processes successfully, cityName: {}", cityName);

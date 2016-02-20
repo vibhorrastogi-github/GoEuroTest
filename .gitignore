@@ -1,4 +1,8 @@
-/target/
 .classpath
 .project
 .settings/
+target/classes/
+target/maven-archiver/
+target/surefire-reports/
+target/test-classes/
+target/GoEuroTest-0.0.1-SNAPSHOT.jar
