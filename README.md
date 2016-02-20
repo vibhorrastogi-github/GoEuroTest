@@ -34,4 +34,6 @@ mvn clean install
 
 java -jar target/GoEuroTest.jar "Berlin"
 
---if above command executed successfully, Berlin_locations.csv file will get generated.
+-- if above command executed successfully, Berlin_locations.csv file will get generated.--
+
+-- find GoEuroTest.jar in /target folder
