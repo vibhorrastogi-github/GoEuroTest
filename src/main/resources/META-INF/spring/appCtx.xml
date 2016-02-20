@@ -1,0 +1,37 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+	<context:annotation-config />
+
+	<context:property-placeholder location="classpath:properties/app.properties" />
+
+	<bean id="webAPILocationService" class="com.goeuro.location.domain.WebAPILocationService">
+
+		<constructor-arg name="baseUrl" value="${goeuro.location.api.url}" />
+		<constructor-arg name="responseParser" ref="webAPILocationResponseParser" />
+	</bean>
+
+	<bean id="csvLocationFileCreator" class="com.goeuro.location.domain.CSVLocationFileCreator" />
+
+	<bean class="com.goeuro.location.domain.LocationManager">
+
+		<constructor-arg name="locationService" ref="webAPILocationService" />
+		<constructor-arg name="fileCreator" ref="csvLocationFileCreator" />
+	</bean>
+
+
+	<bean id="webAPILocationResponseParser" class="com.goeuro.location.domain.WebAPILocationResponseParser">
+
+		<constructor-arg name="mapper" ref="objectMapper" />
+	</bean>
+
+	<bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper" />
+
+</beans>
