@@ -15,6 +15,12 @@ import java.util.List;
  */
 public class CSVWriter {
 
+    /**
+     * @param header
+     * @param lines
+     * @param csvFile
+     * @throws IOException
+     */
     public static void write(final String header, final List<String> lines, final File csvFile)
             throws IOException {
 

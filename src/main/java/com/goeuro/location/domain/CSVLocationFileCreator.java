@@ -24,18 +24,17 @@ public class CSVLocationFileCreator implements ILocationFileCreator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CSVLocationFileCreator.class);
 
-    private static final String LOCATIONS_CSV_FILE_NAME = "_locations.csv";
+    public static final String LOCATIONS_CSV_FILE_NAME = "_locations.csv";
 
     private static final String LOCATIONS_CSV_FILE_HEADER = "_id, name, type, latitude, longitude";
 
     private static final char COMMA = ',';
 
+
     /**
      * (non-Javadoc)
      * 
-     * @throws IOException
-     * 
-     * @see com.goeuro.location.spi.ILocationFileCreator#create(com.goeuro.location.bean.Location)
+     * @see com.goeuro.location.spi.ILocationFileCreator#create(java.util.List, java.lang.String)
      */
     public void create(final List<Location> locations, final String cityName) throws IOException {
 
@@ -48,9 +47,14 @@ public class CSVLocationFileCreator implements ILocationFileCreator {
 
         CSVWriter.write(LOCATIONS_CSV_FILE_HEADER, lines, csvFile);
 
-        LOGGER.info("\n\n****CSV FILE CREATED****, FILE PATH: {}", csvFile.getAbsolutePath() + "\n");
+        LOGGER.info("\n\n****CSV FILE CREATED****, FILE PATH: {}",
+                csvFile.getAbsolutePath() + "\n");
     }
 
+    /**
+     * @param locations
+     * @return
+     */
     private List<String> getLines(final List<Location> locations) {
 
         final List<String> lines = new ArrayList<String>();

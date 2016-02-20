@@ -33,6 +33,10 @@ public class WebAPILocationService implements ILocationService {
 
     private final WebAPILocationResponseParser responseParser;
 
+    /**
+     * @param baseUrl
+     * @param responseParser
+     */
     public WebAPILocationService(final String baseUrl,
             final WebAPILocationResponseParser responseParser) {
 
@@ -43,17 +47,40 @@ public class WebAPILocationService implements ILocationService {
         client = HttpClientBuilder.create().build();
     }
 
+    /**
+     * (non-Javadoc)
+     * 
+     * @see com.goeuro.location.spi.ILocationService#get(java.lang.String)
+     */
     public List<Location> get(final String cityName) throws IOException {
 
         final String url = baseUrl.concat(cityName);
 
-        final HttpGet request = new HttpGet(url);
+        final HttpResponse httpResponse = client.execute(new HttpGet(url));
 
-        final HttpResponse httpresponse = client.execute(request);
-
-        final int responseCode = httpresponse.getStatusLine().getStatusCode();
+        final int responseCode = httpResponse.getStatusLine().getStatusCode();
 
         LOGGER.info("response code: {}", responseCode);
+
+        final String response = readResponse(httpResponse);
+
+        LOGGER.debug("response: {}", response);
+
+        if (responseCode != 200) {
+
+            throw new IllegalStateException("invalid response code: " + responseCode
+                    + ", 200 expected, response: " + response);
+        }
+
+        return responseParser.parse(response);
+    }
+
+    /**
+     * @param httpresponse
+     * @return
+     * @throws IOException
+     */
+    private String readResponse(final HttpResponse httpresponse) throws IOException {
 
         final BufferedReader rd =
                 new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
@@ -71,14 +98,6 @@ public class WebAPILocationService implements ILocationService {
 
         final String response = sb.toString();
 
-        LOGGER.debug("response: {}", response);
-
-        if (responseCode != 200) {
-
-            throw new IllegalStateException("invalid response code, responseCode: " + responseCode
-                    + ", response: " + response);
-        }
-
-        return responseParser.parse(response);
+        return response;
     }
 }

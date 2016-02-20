@@ -12,6 +12,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class GoEuroMain {
 
+    /**
+     * main method
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
 
         final ClassPathXmlApplicationContext ctx =
@@ -33,6 +38,10 @@ public class GoEuroMain {
         ctx.close();
     }
 
+    /**
+     * @param e
+     * @return
+     */
     private static String getMessage(Throwable e) {
 
         final StringBuilder sb = new StringBuilder();

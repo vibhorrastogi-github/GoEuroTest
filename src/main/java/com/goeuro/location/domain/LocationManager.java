@@ -26,6 +26,10 @@ public class LocationManager {
 
     private final ILocationFileCreator fileCreator;
 
+    /**
+     * @param locationService
+     * @param fileCreator
+     */
     public LocationManager(final ILocationService locationService,
             final ILocationFileCreator fileCreator) {
 
@@ -34,7 +38,9 @@ public class LocationManager {
         this.fileCreator = fileCreator;
     }
 
-
+    /**
+     * @param cityName
+     */
     public void processLocation(final String cityName) {
 
         LOGGER.info("going to process location, cityName: {}", cityName);

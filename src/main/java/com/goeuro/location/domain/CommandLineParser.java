@@ -13,6 +13,10 @@ public class CommandLineParser {
     private static final String OPTION =
             "cityName is required in input. sample: java -jar GoEuroTest.jar \"Berlin\"";
 
+    /**
+     * @param args
+     * @return
+     */
     public static String getCityName(final String[] args) {
 
         validateArgs(args);
@@ -20,6 +24,9 @@ public class CommandLineParser {
         return args[0];
     }
 
+    /**
+     * @param args
+     */
     private static void validateArgs(final String[] args) {
 
         if (args == null || args.length == 0) {
